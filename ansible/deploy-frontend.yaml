@@ -9,4 +9,12 @@
     - name: Debug Docker Output
       debug:
         var: docker_valid
+    - name: If no docker
+      debug:
+        msg: "No docker here, run Docker Install first"
+      when: docker_valid.failed
+    - name: If yes docker
+      debug:
+        msg: "Docker is running"
+      when: not docker_valid.failed
 
