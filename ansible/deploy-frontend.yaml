@@ -13,16 +13,18 @@
 
     - name: If no docker, run install docker
       when: docker_valid.failed
-      import_playbook: docker-install.yml
+      become: true 
+      include_tasks:
+        file: ./tasks/install-docker.yml
 
     - name: If yes docker are running
       when: not docker_valid.failed
-      tasks:
+      block:
 
         - name: Copying docker-compose
           copy:
             src: ./misc/docker-compose.yaml
-            dest: ~/docker/docker-compose.yaml
+            dest: /home/miral/docker/docker-compose.yaml
             owner: miral
             group: miral
             mode: '644'

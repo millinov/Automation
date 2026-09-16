@@ -1,0 +1,6 @@
+- name: Check SSH login user
+  hosts: all
+  tasks:
+    - name: Print the SSH user
+      ansible.builtin.debug:
+        msg: "The SSH login user is {{ ansible_user | default(ansible_env.USER) }}"
