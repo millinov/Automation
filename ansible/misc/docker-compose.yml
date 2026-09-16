@@ -1,0 +1,8 @@
+services:
+
+  frontend:
+    container_name: wayshub-frontend
+    image: millinovz/wayshub-frontend:v1
+    stdin_open: true
+    ports:
+      - 3000:3000
