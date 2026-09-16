@@ -22,6 +22,13 @@
     - name: If yes docker are running
       when: not docker_valid.failed
       block:
+        - name: Ensure docker directory exists
+          ansible.builtin.file:
+            path: "{{ ansible_user_dir }}/docker"
+            state: directory
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+            mode: '0755'
 
         - name: Copying docker-compose
           copy:
@@ -33,5 +40,7 @@
         
         - name: Run docker compose
           command: docker compose up -d
+          args:
+            chdir: "{{ ansible_user_dir }}/docker"
 
 
