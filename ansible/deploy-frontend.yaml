@@ -13,12 +13,9 @@
 
     - name: If no docker, run install docker
       when: docker_valid.failed
-      import_tasks:
-        file: docker-install.yml
+      import_playbook: docker-install.yml
 
-    - name: If yes docker
-      debug:
-        msg: "Docker is running"
+    - name: If yes docker are running
       when: not docker_valid.failed
       tasks:
 
