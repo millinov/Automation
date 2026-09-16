@@ -17,11 +17,17 @@
     --agree-tos
     -m {{ user_email }}
 
-- name: Restart certbot
+- name: Restart nginx
   systemd_service:
     state: restarted
     daemon_reload: true
     name: nginx
+
+- name: Install cron
+  apt:
+    name: cron
+    state: latest
+    update_cache: yes
 
 - name: Add certbot renewal cronjob
   cron:
