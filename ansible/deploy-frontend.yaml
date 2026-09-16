@@ -24,9 +24,9 @@
         - name: Copying docker-compose
           copy:
             src: ./misc/docker-compose.yaml
-            dest: /home/miral/docker/docker-compose.yaml
-            owner: miral
-            group: miral
+            dest: "{{ ansible_user_dir }}/docker/docker-compose.yaml"
+            owner: {{ ansible_user }}
+            group: {{ ansible_user }}
             mode: '644'
         
         - name: Run docker compose
