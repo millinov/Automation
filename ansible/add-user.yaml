@@ -1,18 +1,31 @@
-- name: Adding new user (miral)
+- name: "Adding new user ({{ ansible_user }})""
   hosts: webserver, appserver, monitoring
   become: true
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   tasks:
 
-  - name: Create user 'miral' with a home directory
+  - name: "Create user '{{ ansible_user }}' with a home directory"
     user:
-      name: miral
+      name: "{{ ansible_user }}"
       shell: /bin/bash
       create_home: yes
       password: $6$Oy365hjctQXT9fsD$hT7n/giJRzurtcLGUSmXwVHvC55GHXcKvIw2yvXl7szOemtahzrumJMT0iqVOjvILAprHwPsTmyLHoeXDRBYd1
-      
+
   - name: Set authorized_keys for login ssh key
     authorized_key:
-      user: miral
+      user: "{{ ansible_user }}"
       key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+
+  - name: Allow authenticate with password
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#?PasswordAuthentication\s'
+      line: "PasswordAuthentication yes"
+      state: present
+      validate: '/usr/sbin/sshd -t -f %s'
+
+  - name: Restart SSH using the generic wrapper
+    systemd_service:
+      name: sshd
+      state: restarted
