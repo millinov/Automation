@@ -36,7 +36,7 @@
             dest: "{{ ansible_user_dir }}/docker/docker-compose.yml"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
-            mode: '644'
+            mode: '0755'
         
         - name: Run docker compose
           command: docker compose up -d
