@@ -12,9 +12,9 @@
     - name: Copying Reverse Proxy Settings
       copy:
         src: ./.rev-proxy/frontend.conf
-        dest: /etc/nginx/sites-available/frontend.conf
-        owner: {{ ansible_user }}
-        group: {{ ansible_user }}
+        dest: /etc/nginx/sites-enabled/frontend.conf
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
         mode: '644'
 
     - name: Applying Reverse Proxy Settings
