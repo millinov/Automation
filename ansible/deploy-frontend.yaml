@@ -1,20 +1,36 @@
 - name: Deploying wayshub-frontend app
   hosts: appserver
-  become: true
   tasks:
+
     - name: Check If Docker Is Installed
       command: docker --version
       register: docker_valid
       ignore_errors: yes
+
     - name: Debug Docker Output
       debug:
-        var: docker_valid
-    - name: If no docker
-      debug:
-        msg: "No docker here, run Docker Install first"
+        var: docker_valid 
+
+    - name: If no docker, run install docker
       when: docker_valid.failed
+      import_tasks:
+        file: docker-install.yml
+
     - name: If yes docker
       debug:
         msg: "Docker is running"
       when: not docker_valid.failed
+      tasks:
+
+        - name: Copying docker-compose
+          copy:
+            src: ./misc/docker-compose.yaml
+            dest: ~/docker/docker-compose.yaml
+            owner: miral
+            group: miral
+            mode: '644'
+        
+        - name: Run docker compose
+          command: docker compose up -d
+
 
