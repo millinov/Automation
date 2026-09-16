@@ -1,0 +1,12 @@
+- name: Deploying wayshub-frontend app
+  hosts: appserver
+  become: true
+  tasks:
+    - name: Check If Docker Is Installed
+      command: docker --version
+      register: docker_valid
+      ignore_errors: yes
+    - name: Debug Docker Output
+      debug:
+        var: docker_valid
+

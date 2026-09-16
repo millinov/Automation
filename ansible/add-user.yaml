@@ -1,0 +1,16 @@
+- name: Adding new user (miral)
+  hosts: webserver, appserver, monitoring
+  become: true
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+  - name: Create user 'miral' with a home directory
+    user:
+      name: miral
+      shell: /bin/bash
+      create_home: yes
+      password: $6$Oy365hjctQXT9fsD$hT7n/giJRzurtcLGUSmXwVHvC55GHXcKvIw2yvXl7szOemtahzrumJMT0iqVOjvILAprHwPsTmyLHoeXDRBYd1
+  - name: Set authorized_keys for login ssh key
+    authorized_key:
+      user: miral
+      key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"

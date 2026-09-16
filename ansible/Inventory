@@ -1,0 +1,12 @@
+[webserver]
+136.110.60.54
+
+[appserver]
+34.101.250.36
+
+[monitoring]
+34.101.203.94
+
+[all:vars]
+ansible_user=miral
+ansible_config=ansible.cfg
