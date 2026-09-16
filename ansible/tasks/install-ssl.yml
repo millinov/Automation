@@ -1,7 +1,8 @@
 - name: Check if certbot exist
   command: certbot --version
   register: certbot_valid
-  ignore_errors: yes
+  failed_when: false
+  changed_when: false
 
 - name: If no certbot, run install certbot
   when: certbot_valid.rc != 0
@@ -15,3 +16,16 @@
     --non-interactive
     --agree-tos
     -m {{ user_email }}
+
+- name: Restart certbot
+  systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: nginx
+
+- name: Add certbot renewal cronjob
+  cron:
+    name: Certbot renewal Check
+    minute: "0"
+    hour: "0,12"
+    job: "'import random; import time; time.sleep(random.random() * 3600)' && sudo certbot renew -q"
