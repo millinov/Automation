@@ -54,3 +54,9 @@
   systemd_service:
     state: started
     name: docker
+
+- name: Ensure SSH user is in the docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
