@@ -13,7 +13,9 @@
 
     - name: If no docker, run install docker
       when: docker_valid.failed
-      become: true 
+      args:
+        apply:
+          become: true 
       include_tasks:
         file: ./tasks/install-docker.yml
 
@@ -23,10 +25,10 @@
 
         - name: Copying docker-compose
           copy:
-            src: ./misc/docker-compose.yaml
-            dest: "{{ ansible_user_dir }}/docker/docker-compose.yaml"
-            owner: {{ ansible_user }}
-            group: {{ ansible_user }}
+            src: ./misc/docker-compose.yml
+            dest: "{{ ansible_user_dir }}/docker/docker-compose.yml"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
             mode: '644'
         
         - name: Run docker compose
