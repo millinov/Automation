@@ -1,11 +1,11 @@
-- name: "Adding new user ({{ ansible_user }})""
+- name: Adding new user
   hosts: webserver, appserver, monitoring
   become: true
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   tasks:
 
-  - name: "Create user '{{ ansible_user }}' with a home directory"
+  - name: Create user with a home directory
     user:
       name: "{{ ansible_user }}"
       shell: /bin/bash
@@ -26,6 +26,6 @@
       validate: '/usr/sbin/sshd -t -f %s'
 
   - name: Restart SSH using the generic wrapper
-    systemd_service:
-      name: sshd
+    service:
+      name: ssh
       state: restarted
