@@ -1,3 +1,4 @@
 ansible_user: miral
 ansible_config: ansible.cfg
 ansible_python_interpreter: /usr/bin/python3
+user_email: milinovadmiral@gmail.com

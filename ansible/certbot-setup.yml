@@ -1,0 +1,11 @@
+- name: Setup Certbot in webserver
+  hosts: webserver
+  become: true
+  vars:
+    domains_list:
+      - millinov.studentdumbways.my.id
+  tasks:
+
+    - name: Setup SSL for each domain
+      include_tasks: ./tasks/install-ssl.yml
+      loop: "{{ domains_list }}"

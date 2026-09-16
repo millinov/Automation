@@ -1,0 +1,17 @@
+- name: Check if certbot exist
+  command: certbot --version
+  register: certbot_valid
+  ignore_errors: yes
+
+- name: If no certbot, run install certbot
+  when: certbot_valid.rc != 0
+  include_tasks:
+    file: install-certbot.yml
+
+- name: Run certbot
+  command: >
+    certbot --nginx
+    -d {{ item }}
+    --non-interactive
+    --agree-tos
+    -m {{ user_email }}
