@@ -2,11 +2,13 @@
   hosts: webserver
   become: true
   tasks:
+
     - name: Installing Nginx
       apt:
         name: nginx
         state: latest
         update_cache: true
+
     - name: Copying Reverse Proxy Settings
       copy:
         src: ./.rev-proxy/frontend.conf
@@ -14,6 +16,7 @@
         owner: miral
         group: miral
         mode: '644'
+        
     - name: Applying Reverse Proxy Settings
       systemd_service:
         state: restarted
