@@ -24,6 +24,14 @@
       line: "PasswordAuthentication yes"
       state: present
       validate: '/usr/sbin/sshd -t -f %s'
+  
+  - name: Add a new rule sshd_config.d/
+    copy:
+      content: 'PasswordAuthentication yes'
+      dest: /etc/ssh/sshd_config.d/99-password.conf
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: '644'
 
   - name: Restart SSH using the generic wrapper
     service:
