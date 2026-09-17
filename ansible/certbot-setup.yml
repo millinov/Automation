@@ -4,8 +4,33 @@
   vars:
     domains_list:
       - millinov.studentdumbways.my.id
+      - api.millinov.studentdumbways.my.id
+      - prom-millinov.studentdumbways.my.id
+      - monitoring-millinov.studentdumbways.my.id
+      - exporter-1millinov.studentdumbways.my.id
+      - exporter-2millinov.studentdumbways.my.id
   tasks:
 
     - name: Setup SSL for each domain
       include_tasks: ./tasks/install-ssl.yml
       loop: "{{ domains_list }}"
+
+    - name: Restart nginx
+      systemd_service:
+        state: restarted
+        daemon_reload: true
+        name: nginx
+
+    - name: Install cron
+      apt:
+        name: cron
+        state: present
+        update_cache: yes
+
+    - name: Add certbot renewal cronjob
+      cron:
+        name: Certbot renewal Check
+        minute: "0"
+        hour: "0,12"
+        job: "'import random; import time; time.sleep(random.random() * 3600)' && sudo certbot renew -q"
+        state: present

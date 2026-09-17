@@ -32,7 +32,7 @@
 
         - name: Copying docker-compose
           copy:
-            src: ./misc/monitoring-compose.yml
+            src: monitoring-compose.yml
             dest: "{{ ansible_user_dir }}/docker/docker-compose.yml"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
@@ -40,7 +40,7 @@
         
         - name: Copying Prometheus Config
           copy:
-            src: ./misc/prometheus.yml
+            src: prometheus.yml
             dest: "{{ ansible_user_dir }}/docker/prometheus.yml"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"

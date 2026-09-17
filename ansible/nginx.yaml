@@ -11,11 +11,13 @@
 
     - name: Copying Reverse Proxy Settings
       copy:
-        src: ./.rev-proxy/frontend.conf
-        dest: /etc/nginx/sites-enabled/frontend.conf
+        src: "{{ item }}"
+        dest: /etc/nginx/sites-enabled/
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: '644'
+      with_fileglob:
+        - "./.rev-proxy/*"
 
     - name: Applying Reverse Proxy Settings
       systemd_service:

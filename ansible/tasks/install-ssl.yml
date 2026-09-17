@@ -9,29 +9,17 @@
   include_tasks:
     file: install-certbot.yml
 
+- name: Check if SSL certificate already exists for this domain
+  stat:
+    path: "/etc/letsencrypt/live/{{ item }}/fullchain.pem"
+  register: cert_check
+
 - name: Run certbot
+  when: cert_check.stat is defined and cert_check.stat.exists == false
   command: >
     certbot --nginx
     -d {{ item }}
     --non-interactive
+    --redirect
     --agree-tos
     -m {{ user_email }}
-
-- name: Restart nginx
-  systemd_service:
-    state: restarted
-    daemon_reload: true
-    name: nginx
-
-- name: Install cron
-  apt:
-    name: cron
-    state: latest
-    update_cache: yes
-
-- name: Add certbot renewal cronjob
-  cron:
-    name: Certbot renewal Check
-    minute: "0"
-    hour: "0,12"
-    job: "'import random; import time; time.sleep(random.random() * 3600)' && sudo certbot renew -q"

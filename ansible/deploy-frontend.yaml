@@ -32,7 +32,7 @@
 
         - name: Copying docker-compose
           copy:
-            src: ./misc/frontend-compose.yml
+            src: frontend-compose.yml
             dest: "{{ ansible_user_dir }}/docker/docker-compose.yml"
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"

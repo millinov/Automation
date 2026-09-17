@@ -1,6 +1,7 @@
 volumes:
 
   prometheus-data: {}
+  grafana-data: {}
 
 services:
   
@@ -35,6 +36,10 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana
+    restart: always
     ports:
       - 3001:3000
+    volumes:
+      - "grafana-data:"
+
 
