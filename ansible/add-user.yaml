@@ -44,7 +44,7 @@
       state: present
       validate: '/usr/sbin/sshd -t -f %s'
 
-  - name: Restart SSH using the generic wrapper
+  - name: Restart SSH
     systemd_service:
       name: ssh
       state: restarted
