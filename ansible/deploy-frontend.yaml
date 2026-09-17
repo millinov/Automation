@@ -23,7 +23,7 @@
       when: not docker_valid.failed
       block:
         - name: Ensure docker directory exists
-          ansible.builtin.file:
+          file:
             path: "{{ ansible_user_dir }}/docker"
             state: directory
             owner: "{{ ansible_user }}"
@@ -37,6 +37,12 @@
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
             mode: '0755'
+
+        - name: Turn off docker compose first
+          command: docker compose down
+          failed_when: false
+          args:
+            chdir: "{{ ansible_user_dir }}/docker"
         
         - name: Run docker compose
           command: docker compose up -d

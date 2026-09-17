@@ -48,6 +48,7 @@
         
         - name: Turn off docker compose first
           command: docker compose down
+          failed_when: false
           args:
             chdir: "{{ ansible_user_dir }}/docker"
         

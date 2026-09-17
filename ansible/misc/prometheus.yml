@@ -3,4 +3,10 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets:
-    - 34.101.203.94:9100
+    - 10.184.0.4:9100
+    
+- job_name: monitor
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - 10.184.0.3:9100
