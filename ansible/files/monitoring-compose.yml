@@ -26,7 +26,6 @@ services:
         limits:
           cpus: '0.10'
           memory: 50M
-    restart: unless-stopped
 
   prometheus:
     container_name: prometheus
@@ -47,7 +46,6 @@ services:
         limits:
           cpus: '0.60'
           memory: 400M
-    restart: unless-stopped
 
   grafana:
     container_name: grafana
@@ -64,6 +62,5 @@ services:
         limits:
           cpus: '0.30'
           memory: 250M
-    restart: unless-stopped
 
 
