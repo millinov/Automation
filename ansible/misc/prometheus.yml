@@ -1,0 +1,6 @@
+scrape_configs:
+- job_name: wayshub
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - 34.101.203.94
