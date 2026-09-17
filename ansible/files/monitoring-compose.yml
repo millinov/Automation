@@ -5,27 +5,27 @@ volumes:
 
 services:
   
-  nodexp:
-    container_name: node-exporter
-    image: prom/node-exporter
-    restart: unless-stopped
-    ports:
-      - 9100:9100
-    volumes:
-     - "/proc:/host/proc:ro"
-     - "/sys:/host/sys:ro"
-     - "/:/rootfs:ro"
-    command:
-      - "--web.listen-address=:9100"
-      - "--path.procfs=/host/proc"
-      - "--path.sysfs=/host/sys"
-      - "--path.rootfs=/rootfs"
-      - "--collector.filesystem.ignored-mount-points='^/(sys|proc|dev|host|etc|rootfs|var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.10'
-          memory: 50M
+  # nodexp:
+  #   container_name: node-exporter
+  #   image: prom/node-exporter
+  #   restart: unless-stopped
+  #   ports:
+  #     - 9100:9100
+  #   volumes:
+  #    - "/proc:/host/proc:ro"
+  #    - "/sys:/host/sys:ro"
+  #    - "/:/rootfs:ro"
+  #   command:
+  #     - "--web.listen-address=:9100"
+  #     - "--path.procfs=/host/proc"
+  #     - "--path.sysfs=/host/sys"
+  #     - "--path.rootfs=/rootfs"
+  #     - "--collector.filesystem.ignored-mount-points='^/(sys|proc|dev|host|etc|rootfs|var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'"
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.10'
+  #         memory: 50M
 
   prometheus:
     container_name: prometheus
@@ -41,11 +41,11 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - '--storage.tsdb.retention.time=3d'
       - '--storage.tsdb.max-block-duration=2h'
-    deploy:
-      resources:
-        limits:
-          cpus: '0.60'
-          memory: 400M
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.60'
+    #       memory: 400M
 
   grafana:
     container_name: grafana
@@ -57,10 +57,10 @@ services:
       - "grafana-data:/var/lib/grafana"
     environment:
       - GF_SERVER_ROOT_URL=https://monitoring-millinov.studentdumbways.my.id/
-    deploy:
-      resources:
-        limits:
-          cpus: '0.30'
-          memory: 250M
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.30'
+    #       memory: 250M
 
 
