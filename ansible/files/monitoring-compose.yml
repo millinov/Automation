@@ -41,5 +41,7 @@ services:
       - 3001:3000
     volumes:
       - "grafana-data:/var/lib/grafana"
+    environment:
+      - GF_SERVER_ROOT_URL=https://monitoring-millinov.studentdumbways.my.id/
 
 
