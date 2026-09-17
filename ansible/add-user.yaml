@@ -34,6 +34,7 @@
       mode: '644'
 
   - name: Restart SSH using the generic wrapper
-    service:
+    systemd_service:
       name: ssh
       state: restarted
+      daemon_reload: true
