@@ -3,4 +3,4 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets:
-    - 34.101.203.94
+    - 34.101.203.94:3000
