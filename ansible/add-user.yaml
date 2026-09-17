@@ -33,6 +33,17 @@
       group: "{{ ansible_user }}"
       mode: '644'
 
+  - name: Edit other config
+    loop:
+      - /etc/ssh/sshd_config.d/50-cloudimg-settings.conf
+      - /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+    lineinfile:
+      path: "{{ item }}"
+      regexp: '^#?PasswordAuthentication\s'
+      line: "PasswordAuthentication yes"
+      state: present
+      validate: '/usr/sbin/sshd -t -f %s'
+
   - name: Restart SSH using the generic wrapper
     systemd_service:
       name: ssh
