@@ -46,6 +46,11 @@
             group: "{{ ansible_user }}"
             mode: '0755'
         
+        - name: Turn off docker compose first
+          command: docker compose down
+          args:
+            chdir: "{{ ansible_user_dir }}/docker"
+        
         - name: Run docker compose
           command: docker compose up -d
           args:
