@@ -7,12 +7,6 @@ terraform {
   }
 }
 
-provider "google" {
-  project = "project-dbbc895c-751b-4d44-899"
-  region  = "asia-southeast1"
-  zone    = "asia-southeast1-a"
-}
-
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
@@ -34,14 +28,14 @@ resource "google_compute_firewall" "rules" {
 
 resource "google_compute_disk" "ubuntu_disk" {
   name = "ubuntu-disk"
-  type = "pd-balanced"
-  size = 20
+  type = var.gcp_disk_type
+  size = var.gcp_disk_size
 }
 
 resource "google_compute_disk" "debian_disk" {
   name = "debian-disk"
-  type = "pd-balanced"
-  size = 20
+  type = var.gcp_disk_type
+  size = var.gcp_disk_size
 }
 
 resource "google_compute_attached_disk" "ubuntu_attached" {
@@ -61,8 +55,8 @@ resource "google_compute_instance" "vm_instance" {
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-minimal-2404-lts-amd64"
-      size = 20
-      type = "pd-balanced"
+      size = var.gcp_disk_size
+      type = var.gcp_disk_type
     }
   }
   
@@ -83,8 +77,8 @@ resource "google_compute_instance" "debian_instance" {
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-12"
-      size = 20
-      type = "pd-balanced"
+      size = var.gcp_disk_size
+      type = var.gcp_disk_type
     }
   }
 
